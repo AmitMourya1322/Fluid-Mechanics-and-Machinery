@@ -1,0 +1,23 @@
+STREAM PLOT FLOW EQUATION PLOTTING IN PYTHON
+
+
+ %matplotlib qt  # to make a pop up in jupyter this line only required if you are using jupyter compiler
+
+import numpy as np
+import matplotlib.pyplot as plt
+def floweq(x,y):
+    u,v = y**3/3+2*x-x**2*y , x*y**2-2*y-x**3/3
+    #u,v = -2*x*np.sin(y),2*y*np.cos(y)
+    #u,v =-x,-y
+    return u,v
+l = 8.0
+n = 101
+x1 =np.linspace(-l,l,n)
+x2 =np.linspace(-l,l,n)
+X1,X2 = np.meshgrid(x1,x2)
+U,V = floweq(X1,X2)
+vels =(U**2+V**2)**0.5
+lw = 4*vels/np.max(vels)
+plt.figure()
+plt.streamplot(X1,X2,U,V,arrowsize =2,arrowstyle ='->',density =2,linewidth =lw) #,cmap =plt.cm.jet,color =vels,
+plt.show()
