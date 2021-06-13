@@ -1,0 +1,42 @@
+from numpy import *
+import math as m
+from matplotlib.pyplot import *
+vr = .8 #eval(input("enter the velocity ratio of the gear ")) #velocity ratio
+tg = 20#eval(input("enter the no. of teeth in gear "))
+tp = 16#eval(input("enter the no. of teeth in pinion "))
+pa = 14.5#eval(input("enter pressure angle of gear "))
+m = 5#eval(input("enter the module of gear "))
+s = 55#eval(input("enter the static stress (MPa) of the  gear "))
+b =linspace(5,360,360)#eval(input("enter the width of the  gear(mm) "))
+L = 64#eval(input("enter pitch length of the gear(mm) "))
+cv = .566#eval(input("enter velocity factor of gear "))
+torque = 23870 #eval(input("enter the value of torque"))
+if pa ==14.5:
+    yp = .124-.684/tp
+elif pa == 20:
+    yp = .154 -.912/tp
+else:
+    print("enter valid angle")
+            
+print("tooth form factor",yp)
+if torque ==0:
+    wt = s*cv*b*pi*m*yp*((L-b)/L)
+else:
+    wt = 2*torque/(tp*m)
+print(" tangential load acting on gear is ",wt)
+ses =630 # eval(input("enter the endurance stress limit of gear "))
+ep = 84000 # eval(input("enter elasticity of the gear pinion"))
+eg = 84000 # eval(input("enter elasticity of the gear "))
+k = ses**2*sin(radians(pa))/1.4*(1/ep+1/eg)
+Q = 2*tg/(tg+tp)
+print("load stress factor ",k)
+print("ratio factor ",Q)
+W = m*tp*b*Q*k
+print(W)
+
+    
+plot(b,W)
+xlim(0,360)
+ylim(0,360)
+axis('equal')
+show()
